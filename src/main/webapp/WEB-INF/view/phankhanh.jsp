@@ -16,7 +16,6 @@
 
 </head>
 <body>
-<h1>${test1}</h1>
 <button>submit</button>
 </body>
 </html>
