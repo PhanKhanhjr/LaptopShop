@@ -1,6 +1,13 @@
 package vn.hoidanit.laptopshop.domain;
 
+import jakarta.persistence.*;
+
+@Entity
+//@Table(name = "user")
 public class User {
+    @Id
+    // Tăng ID tự động.
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String email;
     private String password;

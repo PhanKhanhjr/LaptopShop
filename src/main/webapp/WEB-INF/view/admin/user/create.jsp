@@ -39,6 +39,7 @@
                 <div class="mb-3">
                     <label>Full name</label>
                     <form:input path="fullName" class="form-control"/>
+
                 </div>
                 <div class="mb-3">
                     <label>Address</label>
