@@ -6,7 +6,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>User Detail ${id}</title>
+    <title>HomePage</title>
     <!-- Latest compiled and minified CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
@@ -18,25 +18,21 @@
 
 </head>
 <body>
-<div class="container mt-5 mx-auto">
-    <div class="d-flex justify-content-between align-items-center">
-        <h3>User Detail with id = ${id}</h3>
-    </div>
-    <div>
-        <div class="card mt-5" style="width: 60%">
-            <div class="card-header">
-                User infomation
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-6 col-12 mx-auto">
+            <h2>Delete user</h2>
+            <div class="alert alert-danger" role="alert">
+                Are you sure to delete this user?
             </div>
-            <ul class="list-group list-group-flush">
-                <li class="list-group-item">ID: ${user.id}</li>
-                <li class="list-group-item">Email: ${user.email}</li>
-                <li class="list-group-item">Full Name: ${user.fullName}</li>
-                <li class="list-group-item">phone: ${user.phone}</li>
-                <li class="list-group-item">Address: ${user.address}</li>
-            </ul>
+            <form:form modelAttribute="deleteUser" action="/admin/user/delete" method="post">
+                <div style="display: none">
+                    <form:input path="id"/>
+                </div>
+                <button class="btn btn-danger">Confirm</button>
+            </form:form>
         </div>
     </div>
 </div>
-
 </body>
 </html>
