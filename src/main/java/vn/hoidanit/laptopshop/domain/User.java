@@ -2,8 +2,11 @@ package vn.hoidanit.laptopshop.domain;
 
 import jakarta.persistence.*;
 
+import java.util.Set;
+
 @Entity
-//@Table(name = "user")
+@Table(name = "users")
+
 public class User {
     @Id
     // Tăng ID tự động.
@@ -14,6 +17,21 @@ public class User {
     private String fullName;
     private String address;
     private String phone;
+    private String avatar;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "role_id")
+    private Role role;
+
+    @OneToMany(mappedBy = "user")
+    private Set<Oder> oders;
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
 
     public long getId() {
         return id;
@@ -72,6 +90,7 @@ public class User {
                 ", fullName='" + fullName + '\'' +
                 ", address='" + address + '\'' +
                 ", phone='" + phone + '\'' +
+                ", avatar='" + avatar + '\'' +
                 '}';
     }
 }

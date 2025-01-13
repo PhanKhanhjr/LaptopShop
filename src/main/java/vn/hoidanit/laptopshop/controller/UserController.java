@@ -1,12 +1,9 @@
 package vn.hoidanit.laptopshop.controller;
-
 import org.springframework.web.bind.annotation.*;
 import vn.hoidanit.laptopshop.domain.User;
-import vn.hoidanit.laptopshop.repository.UserRepository;
 import vn.hoidanit.laptopshop.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-
 import java.util.List;
 
 
