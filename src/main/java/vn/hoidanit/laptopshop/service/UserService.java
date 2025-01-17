@@ -1,7 +1,9 @@
 package vn.hoidanit.laptopshop.service;
 
 import org.springframework.stereotype.Service;
+import vn.hoidanit.laptopshop.domain.Role;
 import vn.hoidanit.laptopshop.domain.User;
+import vn.hoidanit.laptopshop.repository.RoleRepository;
 import vn.hoidanit.laptopshop.repository.UserRepository;
 
 import java.util.List;
@@ -9,19 +11,19 @@ import java.util.List;
 @Service
 public class UserService {
     private final UserRepository userRepository;
+    private final RoleRepository roleRepository;
 
     public String handleHello() {
         return "Hello from service";
     }
 
-    public UserService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository,RoleRepository roleRepository ) {
         this.userRepository = userRepository;
+        this.roleRepository = roleRepository;
     }
 
-    public User handleSaveUser(User user) {
-        User fanKhanh = this.userRepository.save(user);
-        System.out.println(fanKhanh);
-        return fanKhanh;
+    public void handleSaveUser(User user) {
+       this.userRepository.save(user);
     }
 
     public List<User> getAllUser() {
@@ -38,5 +40,8 @@ public class UserService {
 
     public void deleteUserById(long id) {
         this.userRepository.deleteById(id);
+    }
+    public Role getRoleByName(String name) {
+         return this.roleRepository.findByName(name);
     }
 }

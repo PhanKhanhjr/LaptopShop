@@ -1,7 +1,6 @@
 package vn.hoidanit.laptopshop.domain;
 
 import jakarta.persistence.*;
-
 import java.util.Set;
 
 @Entity
@@ -19,11 +18,27 @@ public class User {
     private String phone;
     private String avatar;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "role_id")
+    @JoinColumn(name ="role_id")
     private Role role;
 
     @OneToMany(mappedBy = "user")
     private Set<Oder> oders;
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
+    public Set<Oder> getOders() {
+        return oders;
+    }
+
+    public void setOders(Set<Oder> oders) {
+        this.oders = oders;
+    }
 
     public String getAvatar() {
         return avatar;
@@ -52,7 +67,6 @@ public class User {
     public String getPassword() {
         return password;
     }
-
     public void setPassword(String password) {
         this.password = password;
     }

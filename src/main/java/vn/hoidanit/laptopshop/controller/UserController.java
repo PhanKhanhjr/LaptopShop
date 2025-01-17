@@ -1,20 +1,31 @@
 package vn.hoidanit.laptopshop.controller;
+import jakarta.servlet.ServletContext;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import vn.hoidanit.laptopshop.domain.User;
+import vn.hoidanit.laptopshop.service.UploadService;
 import vn.hoidanit.laptopshop.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.List;
 
 
 @Controller
 public class UserController {
     private final UserService userService;
+    private final UploadService uploadService;
+    private final PasswordEncoder passwordEncoder;
 
-
-    public UserController(UserService userService) {
+    public UserController(UserService userService, UploadService uploadService,PasswordEncoder passwordEncoder ) {
         this.userService = userService;
-
+        this.uploadService = uploadService;
+        this.passwordEncoder = passwordEncoder;
     }
 
 
@@ -82,11 +93,20 @@ public class UserController {
     //Mặc định không truyền gì thì sẽ là phương thức GET.
 //    @GetMapping
     @RequestMapping(value = "/admin/user/create", method = RequestMethod.POST)
-    public String createUserPage(Model model, @ModelAttribute("newUser") User nguoidung) {
-        //dat nguoi dung cho de phan biet
+    public String createUserPage(Model model,
+                                 @ModelAttribute("newUser") User nguoidung,
+                                 @RequestParam("avatarFile") MultipartFile file) {
+        String avatar = this.uploadService.handelUploadFile(file,"avatar");
+        String hashPassword = this.passwordEncoder.encode(nguoidung.getPassword());
+        nguoidung.setPassword(hashPassword);
+        nguoidung.setAvatar(avatar);
+        nguoidung.setRole(this.userService.getRoleByName(nguoidung.getRole().getName()));
         this.userService.handleSaveUser(nguoidung);
+
+
         return "redirect:/admin/user";
     }
+
 }
 
 
