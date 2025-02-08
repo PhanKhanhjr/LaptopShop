@@ -1,6 +1,8 @@
-package vn.hoidanit.laptopshop.controller;
-import jakarta.servlet.ServletContext;
+package vn.hoidanit.laptopshop.controller.admin;
+import jakarta.validation.Valid;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import vn.hoidanit.laptopshop.domain.User;
@@ -9,10 +11,7 @@ import vn.hoidanit.laptopshop.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.sql.SQLOutput;
 import java.util.List;
 
 
@@ -94,19 +93,27 @@ public class UserController {
 //    @GetMapping
     @RequestMapping(value = "/admin/user/create", method = RequestMethod.POST)
     public String createUserPage(Model model,
-                                 @ModelAttribute("newUser") User nguoidung,
-                                 @RequestParam("avatarFile") MultipartFile file) {
+
+                                 @Valid @ModelAttribute("newUser") User nguoidung,
+                                 BindingResult newUserBindingResult,
+                                 @RequestParam("avatarFile") MultipartFile file
+
+    ) {
+        List<FieldError> errors = newUserBindingResult.getFieldErrors();
+        for (FieldError error : errors) {
+            System.out.println(">>>" + error.getField() + " " + error.getDefaultMessage());
+            if (newUserBindingResult.hasErrors()) {
+                return "admin/user/create";
+            }
+        }
         String avatar = this.uploadService.handelUploadFile(file,"avatar");
         String hashPassword = this.passwordEncoder.encode(nguoidung.getPassword());
         nguoidung.setPassword(hashPassword);
         nguoidung.setAvatar(avatar);
         nguoidung.setRole(this.userService.getRoleByName(nguoidung.getRole().getName()));
         this.userService.handleSaveUser(nguoidung);
-
-
         return "redirect:/admin/user";
     }
-
 }
 
 

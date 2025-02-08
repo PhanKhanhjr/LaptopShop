@@ -20,7 +20,38 @@
     <jsp:include page="../layout/sidebar.jsp"/>
     <div id="layoutSidenav_content">
         <main>
-            Product
+            <div class="container mt-5 mx-auto">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h1>Product table</h1>
+                    <a href="/admin/product/create" class="btn btn-primary">Add new product</a>
+                </div>
+            <table class="table table-bordered mt-5">
+                <thead>
+                <tr>
+                    <th scope="col">Id</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Factory</th>
+                    <th scope="col">Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                <c:forEach var="product" items="${products}">
+                <tr>
+                    <th>${product.id}</th>
+                    <th>${product.name}</th>
+                    <th>${product.price}</th>
+                    <th>${product.factory}</th>
+                    <td>
+                    <a href="/admin/product/${product.id}" class="btn btn-success">View</a>
+                    <a href="/admin/product/update/${product.id}" class="btn btn-primary">Update</a>
+                    <a href="/admin/product/delete/${product.id}" class="btn btn-danger">Delete</a>
+                    </td>
+                </tr>
+                    </c:forEach>
+                </tbody>
+            </table>
+            </div>
         </main>
         <jsp:include page="../layout/footer.jsp"/>
     </div>

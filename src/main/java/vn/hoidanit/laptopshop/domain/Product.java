@@ -1,6 +1,10 @@
 package vn.hoidanit.laptopshop.domain;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.DecimalMin;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 
 import java.util.Set;
 
@@ -10,34 +14,41 @@ public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+
+    @NotNull
+    @NotEmpty(message = "Tên sản phẩm không được để trống")
     private String name;
+
+    @NotNull
+    @DecimalMin(value = "0", inclusive = false, message = "Giá phải lớn hơn 0")
     private double price;
     private String image;
+
+    @NotNull
+    @NotEmpty(message = "detailDesc không được để trống")
     private String detailDesc;
-    private String sortDesc;
+
+    @NotNull
+    @NotEmpty(message = "sortDesc không được để trống" )
+    private String shortDesc;
+
+    @NotNull
+    @Min(value = 1, message = "Số lượng cần lớn hơn hoặc bằng 1")
     private long quantity;
     private long sold;
     private String factory;
     private String target;
 
+    public @NotNull @NotEmpty(message = "sortDesc không được để trống") String getShortDesc() {
+        return shortDesc;
+    }
+
+    public void setShortDesc(@NotNull @NotEmpty(message = "sortDesc không được để trống") String shortDesc) {
+        this.shortDesc = shortDesc;
+    }
+
     @OneToMany(mappedBy = "product")
     private Set<OderDetail> oderDetails;
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public double getPrice() {
-        return price;
-    }
-
-    public void setPrice(double price) {
-        this.price = price;
-    }
 
     public long getId() {
         return id;
@@ -45,6 +56,24 @@ public class Product {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public @NotNull @NotEmpty(message = "Tên sản phẩm không được để trống") String getName() {
+        return name;
+    }
+
+    public void setName(@NotNull @NotEmpty(message = "Tên sản phẩm không được để trống") String name) {
+        this.name = name;
+    }
+
+    @NotNull
+    @DecimalMin(value = "0", inclusive = false, message = "Giá phải lớn hơn 0")
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(@NotNull @DecimalMin(value = "0", inclusive = false, message = "Giá phải lớn hơn 0") double price) {
+        this.price = price;
     }
 
     public String getImage() {
@@ -55,27 +84,29 @@ public class Product {
         this.image = image;
     }
 
-    public String getDetailDesc() {
+    public @NotNull @NotEmpty(message = "detailDesc không được để trống") String getDetailDesc() {
         return detailDesc;
     }
 
-    public void setDetailDesc(String detailDesc) {
+    public void setDetailDesc(@NotNull @NotEmpty(message = "detailDesc không được để trống") String detailDesc) {
         this.detailDesc = detailDesc;
     }
 
-    public String getSortDesc() {
-        return sortDesc;
+    public @NotNull @NotEmpty(message = "sortDesc không được để trống") String getSortDesc() {
+        return shortDesc;
     }
 
-    public void setSortDesc(String sortDesc) {
-        this.sortDesc = sortDesc;
+    public void setSortDesc(@NotNull @NotEmpty(message = "sortDesc không được để trống") String sortDesc) {
+        this.shortDesc = sortDesc;
     }
 
+    @NotNull
+    @Min(value = 1, message = "Số lượng cần lớn hơn hoặc bằng 1")
     public long getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(long quantity) {
+    public void setQuantity(@NotNull @Min(value = 1, message = "Số lượng cần lớn hơn hoặc bằng 1") long quantity) {
         this.quantity = quantity;
     }
 
@@ -103,6 +134,14 @@ public class Product {
         this.target = target;
     }
 
+    public Set<OderDetail> getOderDetails() {
+        return oderDetails;
+    }
+
+    public void setOderDetails(Set<OderDetail> oderDetails) {
+        this.oderDetails = oderDetails;
+    }
+
     @Override
     public String toString() {
         return "Product{" +
@@ -111,7 +150,7 @@ public class Product {
                 ", price=" + price +
                 ", image='" + image + '\'' +
                 ", detailDesc='" + detailDesc + '\'' +
-                ", sortDesc='" + sortDesc + '\'' +
+                ", sortDesc='" + shortDesc + '\'' +
                 ", quantity=" + quantity +
                 ", sold=" + sold +
                 ", factory='" + factory + '\'' +

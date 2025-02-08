@@ -25,7 +25,6 @@
                 <div class="d-flex justify-content-between align-items-center">
                     <h1>User Table</h1>
                     <a href="/admin/user/create" class="btn btn-primary">Create User</a>
-
                 </div>
                 <table class="table table-striped table-hover table-bordered border-primary">
                     <thead>

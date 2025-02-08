@@ -1,6 +1,8 @@
 package vn.hoidanit.laptopshop.domain;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
+
 import java.util.Set;
 
 @Entity
@@ -11,9 +13,19 @@ public class User {
     // Tăng ID tự động.
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+
+    @Email(message = "Email không hợp lệ", regexp = "^[a-zA-Z0-9_!#$%&'*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$")
+    @NotEmpty(message = "Email không được để trống")
     private String email;
+
+    @NotNull
+    @Size(min = 5, message = "Mật khẩu phải có tối thiểu 5 kí tự")
     private String password;
+
+    @NotNull
+    @Size(min = 5, message = "Full name phải có tối thiểu 5 kí tự")
     private String fullName;
+
     private String address;
     private String phone;
     private String avatar;

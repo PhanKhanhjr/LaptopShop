@@ -36,22 +36,32 @@
             <h2>Create a User</h2>
             <form:form enctype="multipart/form-data" method="post" action="/admin/user/create" modelAttribute="newUser" class="row" >
                 <div class="mb-3 col-12 col-md-6">
-                    <label for="exampleInputEmail1">Email address</label>
-                    <form:input path="email" type="email" class="form-control" id="exampleInputEmail1"
-                                aria-describedby="emailHelp"
-                                placeholder="Enter email"/>
-                    <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone
-                        else.</small>
+                    <label>Email address</label>
+                    <c:set var="errEmail">
+                        <form:errors path="email" cssClass="invalid-feedback" />
+                    </c:set>
+                    <form:input path="email" type="email" class="form-control ${not empty errEmail ? 'is-invalid' : ''}"/>
+                    ${errEmail}
                 </div>
+
+
                 <div class="col-md-6 col-12">
+                    <c:set var="errPassword">
+                        <form:errors path="password" cssClass="invalid-feedback" />
+                    </c:set>
                     <label>Password</label>
-                    <form:input type="password" path="password" class="form-control"
+                    <form:input type="password" path="password" class="form-control ${not empty errPassword ? 'is-invalid' : ''}"
                                 placeholder="Password"/>
+                    ${errPassword}
                 </div>
+
                 <div class="col-md-6 col-12">
                     <label>Full name</label>
-                    <form:input path="fullName" class="form-control"/>
-
+                    <c:set var="errFullName">
+                        <form:errors path="fullName" cssClass="invalid-feedback" />
+                    </c:set>
+                    <form:input path="fullName" class="form-control ${not empty errFullName ? 'is-invalid' : ''}"/>
+                    ${errFullName}
                 </div>
                 <div class="col-md-6 col-12">
                     <label>Address</label>
