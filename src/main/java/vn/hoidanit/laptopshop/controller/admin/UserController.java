@@ -1,4 +1,5 @@
 package vn.hoidanit.laptopshop.controller.admin;
+
 import jakarta.validation.Valid;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.BindingResult;
@@ -21,7 +22,7 @@ public class UserController {
     private final UploadService uploadService;
     private final PasswordEncoder passwordEncoder;
 
-    public UserController(UserService userService, UploadService uploadService,PasswordEncoder passwordEncoder ) {
+    public UserController(UserService userService, UploadService uploadService, PasswordEncoder passwordEncoder) {
         this.userService = userService;
         this.uploadService = uploadService;
         this.passwordEncoder = passwordEncoder;
@@ -89,8 +90,7 @@ public class UserController {
         return "redirect:/admin/user";
     }
 
-    //Mặc định không truyền gì thì sẽ là phương thức GET.
-//    @GetMapping
+    //    @GetMapping
     @RequestMapping(value = "/admin/user/create", method = RequestMethod.POST)
     public String createUserPage(Model model,
 
@@ -106,7 +106,7 @@ public class UserController {
                 return "admin/user/create";
             }
         }
-        String avatar = this.uploadService.handelUploadFile(file,"avatar");
+        String avatar = this.uploadService.handelUploadFile(file, "avatar");
         String hashPassword = this.passwordEncoder.encode(nguoidung.getPassword());
         nguoidung.setPassword(hashPassword);
         nguoidung.setAvatar(avatar);

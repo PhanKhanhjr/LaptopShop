@@ -2,6 +2,7 @@ package vn.hoidanit.laptopshop.domain;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
+import vn.hoidanit.laptopshop.service.validator.StrongPassword;
 
 import java.util.Set;
 
@@ -19,7 +20,8 @@ public class User {
     private String email;
 
     @NotNull
-    @Size(min = 5, message = "Mật khẩu phải có tối thiểu 5 kí tự")
+//    @Size(min = 5, message = "Mật khẩu phải có tối thiểu 5 kí tự")
+    @StrongPassword(message = "Mật khẩu phải có 8 kí tự bao gồm chữ in hoa, chữ thường và số")
     private String password;
 
     @NotNull
@@ -29,8 +31,8 @@ public class User {
     private String address;
     private String phone;
     private String avatar;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name ="role_id")
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "role_id")
     private Role role;
 
     @OneToMany(mappedBy = "user")
@@ -79,6 +81,7 @@ public class User {
     public String getPassword() {
         return password;
     }
+
     public void setPassword(String password) {
         this.password = password;
     }

@@ -1,6 +1,8 @@
 package vn.hoidanit.laptopshop.service;
 
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
+import vn.hoidanit.laptopshop.domain.DTO.RegisterDTO;
 import vn.hoidanit.laptopshop.domain.Role;
 import vn.hoidanit.laptopshop.domain.User;
 import vn.hoidanit.laptopshop.repository.RoleRepository;
@@ -17,13 +19,13 @@ public class UserService {
         return "Hello from service";
     }
 
-    public UserService(UserRepository userRepository,RoleRepository roleRepository ) {
+    public UserService(UserRepository userRepository, RoleRepository roleRepository) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
     }
 
     public void handleSaveUser(User user) {
-       this.userRepository.save(user);
+        this.userRepository.save(user);
     }
 
     public List<User> getAllUser() {
@@ -41,7 +43,25 @@ public class UserService {
     public void deleteUserById(long id) {
         this.userRepository.deleteById(id);
     }
+    
     public Role getRoleByName(String name) {
-         return this.roleRepository.findByName(name);
+        return this.roleRepository.findByName(name);
+    }
+
+    //mapper registerDTO to user
+    public User registerDTOtoUser(RegisterDTO dto) {
+        User user = new User();
+        user.setFullName(dto.getFirstName() + " " + dto.getLastName());
+        user.setEmail(dto.getEmail());
+        user.setPassword(dto.getPassword());
+        return user;
+    }
+
+    public boolean checkEmailExist(String email) {
+        return this.userRepository.existsByEmail(email);
+    }
+
+    public User getUserByEmail(String email) {
+        return this.userRepository.findByEmail(email);
     }
 }

@@ -7,12 +7,22 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import vn.hoidanit.laptopshop.domain.Product;
+import vn.hoidanit.laptopshop.service.ProductService;
 
 @Controller
 public class itemController {
 
+    private final ProductService productService;
+
+    public itemController(ProductService productService) {
+        this.productService = productService;
+    }
+
     @GetMapping("/product/{id}")
     public String getProductPage(@PathVariable long id, Model model) {
+        Product product = productService.getProductById(id);
+        model.addAttribute("product", product);
+        model.addAttribute("id", id);
         return "client/product/detail";
     }
 

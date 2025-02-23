@@ -25,11 +25,12 @@ public class Product {
     private String image;
 
     @NotNull
+    @Column(columnDefinition = "MEDIUMTEXT")
     @NotEmpty(message = "detailDesc không được để trống")
     private String detailDesc;
 
     @NotNull
-    @NotEmpty(message = "sortDesc không được để trống" )
+    @NotEmpty(message = "sortDesc không được để trống")
     private String shortDesc;
 
     @NotNull
