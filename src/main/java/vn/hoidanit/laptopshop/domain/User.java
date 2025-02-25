@@ -38,6 +38,9 @@ public class User {
     @OneToMany(mappedBy = "user")
     private Set<Oder> oders;
 
+    @OneToOne(mappedBy = "user")
+    private Cart cart;
+
     public Role getRole() {
         return role;
     }
