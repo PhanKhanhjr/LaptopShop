@@ -19,6 +19,58 @@ public class Oder {
     @OneToMany(mappedBy = "oder")
     private Set<OderDetail> oderDetails;
 
+    private String receiverName;
+    private String receiverAddress;
+    private String receiverPhone;
+    private String status;
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Set<OderDetail> getOderDetails() {
+        return oderDetails;
+    }
+
+    public void setOderDetails(Set<OderDetail> oderDetails) {
+        this.oderDetails = oderDetails;
+    }
+
+    public String getReceiverAddress() {
+        return receiverAddress;
+    }
+
+    public void setReceiverAddress(String receiverAddress) {
+        this.receiverAddress = receiverAddress;
+    }
+
+    public String getReceiverName() {
+        return receiverName;
+    }
+
+    public void setReceiverName(String receiverName) {
+        this.receiverName = receiverName;
+    }
+
+    public String getReceiverPhone() {
+        return receiverPhone;
+    }
+
+    public void setReceiverPhone(String receiverPhone) {
+        this.receiverPhone = receiverPhone;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
 
     public Long getId() {
         return id;

@@ -113,6 +113,14 @@ public class User {
         this.phone = phone;
     }
 
+    public Cart getCart() {
+        return cart;
+    }
+
+    public void setCart(Cart cart) {
+        this.cart = cart;
+    }
+
     @Override
     public String toString() {
         return "User{" +
